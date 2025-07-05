@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Achiever Computer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+         // Firebase Config (તમારું project નું configuration નાખો)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
+            authDomain: "achiever-computer.firebaseapp.com",
+            projectId: "achiever-computer",
+            storageBucket: "achiever-computer.appspot.com",
+            messagingSenderId: "79033622683",
+            appId: "1:79033622683:web:c3021c747936a720ada63e",
+            measurementId: "G-0CQSDS6C0K"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, user => {
+            if (!user) window.location.href = "login.html";
+            else loadStudents();
+        });
+
+        window.addStudent = async function() {
+            const name = document.getElementById('name').value;
+            const course = document.getElementById('course').value;
+            const fees = parseInt(document.getElementById('fees').value);
+            const contact = document.getElementById('contact').value;
+
+            try {
+                await addDoc(collection(db, "students"), {
+                    name, course, totalFees: fees, paidFees: 0, dueFees: fees, contact
+                });
+                alert("Student added successfully!");
+                loadStudents();
+            } catch (error) {
+                alert("Error adding student: " + error.message);
+            }
+        }
+
+        window.loadStudents = async function() {
+            const querySnapshot = await getDocs(collection(db, "students"));
+            const list = document.getElementById('studentList');
+            list.innerHTML = '';
+            querySnapshot.forEach(docSnap => {
+                const data = docSnap.data();
+                list.innerHTML += `<li>${data.name} - ${data.course} ₹${data.totalFees}
+                    <button onclick="deleteStudent('${docSnap.id}')">Delete</button>
+                    <button onclick="updateFees('${docSnap.id}', ${data.totalFees}, ${data.paidFees})">Update Fees</button></li>`;
+            });
+        }
+
+        window.deleteStudent = async function(id) {
+            await deleteDoc(doc(db, "students", id));
+            alert("Deleted successfully");
+            loadStudents();
+        }
+
+        window.updateFees = async function(id, total, paid) {
+            const newPaid = parseInt(prompt("Enter Paid Amount", paid));
+            if (!isNaN(newPaid)) {
+                await updateDoc(doc(db, "students", id), {
+                    paidFees: newPaid,
+                    dueFees: total - newPaid
+                });
+                alert("Fees Updated");
+                loadStudents();
+            }
+        }
+
+        window.logout = function() {
+            signOut(auth).then(() => window.location.href = "login.html");
+        }
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f0f0f0; margin: 0; padding: 0; }
+        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px; text-align: center; }
+        .container { max-width: 600px; margin: 40px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; }
+        h2 { color: #007BFF; text-align: center; }
+        input { display: block; width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 8px 15px; margin: 5px; background: #28A745; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .logout { background: #dc3545; margin-top: 20px; }
+        .logout:hover { background: #c82333; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 10px 0; padding: 8px; background: #fff; border: 1px solid #ccc; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Admin Panel</h1>
+</header>
+
+<div class="container">
+    <h2>Add New Student</h2>
+    <input type="text" id="name" placeholder="Student Name">
+    <input type="text" id="course" placeholder="Course">
+    <input type="number" id="fees" placeholder="Total Fees">
+    <input type="text" id="contact" placeholder="Contact Number">
+    <button onclick="addStudent()">Add Student</button>
+
+    <h2>Student List</h2>
+    <ul id="studentList"></ul>
+
+    <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+</body>
+</html>
