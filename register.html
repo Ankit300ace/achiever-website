@@ -1,51 +1,93 @@
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achiever Computer - Student Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// Firebase Config
-const firebaseConfig = {
-    apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
-    authDomain: "achiever-computer.firebaseapp.com",
-    projectId: "achiever-computer",
-    storageBucket: "achiever-computer.appspot.com",
-    messagingSenderId: "79033622683",
-    appId: "1:79033622683:web:c3021c747936a720ada63e"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
+            authDomain: "achiever-computer.firebaseapp.com",
+            projectId: "achiever-computer",
+            storageBucket: "achiever-computer.appspot.com",
+            messagingSenderId: "79033622683",
+            appId: "1:79033622683:web:c3021c747936a720ada63e",
+            measurementId: "G-0CQSDS6C0K"
+        };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-// Register Student
-document.getElementById('registerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const contact = document.getElementById('contact').value;
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const course = document.getElementById('course').value;
-    const contact = document.getElementById('contact').value;
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+                // Save student data to Firestore
+                await setDoc(doc(db, "students", user.uid), {
+                    email: user.email,
+                    course: "",
+                    contact: contact,
+                    totalFees: 0,
+                    paidFees: 0,
+                    dueFees: 0
+                });
 
-        await setDoc(doc(db, "students", user.uid), {
-            name: name,
-            email: email,
-            course: course,
-            totalFees: 0,
-            paidFees: 0,
-            dueFees: 0,
-            contact: contact
+                alert('Registration Successful! Please login now.');
+                window.location.href = "login.html";
+
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
         });
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #ffffff; color: #333; }
+        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px; text-align: center; }
+        nav { margin-top: 10px; }
+        nav a { margin: 0 15px; color: #fff; text-decoration: underline; font-weight: 600; font-size: 16px; }
+        .container { max-width: 400px; margin: 40px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; }
+        h2 { color: #007BFF; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+        button { width: 100%; padding: 12px; background: #28A745; color: #fff; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; }
+        button:hover { background: #218838; }
+        footer { background: #f1f1f1; text-align: center; padding: 15px; margin-top: 30px; font-size: 14px; }
+    </style>
+</head>
+<body>
 
-        alert("Registration Successful! Please login now.");
-        window.location.href = "login.html";
-    } catch (error) {
-        alert("Error: " + error.message);
-    }
-});
-</script>
+<header>
+    <h1>Achiever Computer Education</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Student Login</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Student Registration</h2>
+    <form id="registerForm">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="text" id="contact" placeholder="Contact Number" required>
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<footer>
+    © 2025 Achiever Computer Education | All Rights Reserved.
+</footer>
+
+</body>
+</html>
