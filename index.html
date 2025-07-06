@@ -1,12 +1,104 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Achiever Computer - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #ffffff; color: #333; }
+        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px 20px 60px 20px; text-align: center; position: relative; }
+        header img { position: absolute; top: 15px; left: 20px; height: 50px; border-radius: 5px; }
+        nav { margin-top: 10px; }
+        nav a { margin: 0 15px; color: #fff; text-decoration: underline; font-weight: 600; font-size: 16px; }
+        section { padding: 30px 20px; }
+        h2 { color: #007BFF; margin-top: 0; font-size: 24px; }
+        .courses, .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 10px; }
+        .course, .reason { padding: 15px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; text-align: center; transition: 0.3s; font-weight: 500; }
+        .course:hover, .reason:hover { background: #e0f7fa; transform: scale(1.05); }
+        footer { background: #f1f1f1; text-align: center; padding: 15px; margin-top: 20px; font-size: 14px; }
+        .contact a { color: #007BFF; text-decoration: none; font-weight: 600; }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            padding: 15px;
+            font-size: 24px;
+            z-index: 100;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            transition: background 0.3s;
+        }
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Achiever Computer</h1>
-    <a href="login.html">Login</a> | <a href="verify.html">Verify Certificate</a>
+
+<header>
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYY4z95TrY874zxFHXmiH4EflzwkYrdEnwqGPSO3EkvfW4FV606MRXl-AE9MtJAf9j5nndzoMLkP5HEtjLB5PGoEAPn9ObUx6wdYGW-TUl61lIgoRQ38knIZRKw-jSaj_III4uZuNate-ldBG-99Io7K8jPI72-Ulp2YCbzrSIqVr6FI8wbVpfTi54Cis/s320/logo.png" alt="Achiever Computer Logo">
+    <h1>Achiever Computer Education</h1>
+    <p>Learn Today, Lead Tomorrow</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="login.html">Student Login</a>
+        <a href="verify.html">Certificate Verification</a>
+    </nav>
+</header>
+
+<section>
+    <h2>About Us</h2>
+    <p>Achiever Computer Education એ Limdi ના એક શ્રેષ્ઠ Computer Education Institute છે. અહીં અમે Basic Computer Advance Computer, Accounting, Freelancing જેવા અનેક Practical Courses શીખવીએ છીએ. 2009 થી અમે એજ્યુકેશન સાથે જોડાયેલા છીએ.</p>
+</section>
+
+<section>
+    <h2>Our Courses</h2>
+    <div class="courses">
+        <div class="course">CCC</div>
+        <div class="course">DCA</div>
+        <div class="course">Tally ERP9</div>
+        <div class="course">Photoshop, CorelDraw</div>
+        <div class="course">AutoCAD</div>
+        <div class="course">Spoken English</div>
+        <div class="course">Freelancing & Web Development</div>
+    </div>
+</section>
+
+<section>
+    <h2>Why Choose Us?</h2>
+    <div class="why">
+        <div class="reason">Certified Faculty</div>
+        <div class="reason">Practical Learning</div>
+        <div class="reason">Affordable Fees</div>
+        <div class="reason">Certificate Verification</div>
+        <div class="reason">1000+ Happy Teachers & Students</div>
+    </div>
+</section>
+
+<section>
+    <h2>Contact Us</h2>
+    <div class="contact">
+        <p>📍 Opps APMC Market, Dahod Road, Limdi</p>
+        <p>📞 Phone: 90332 63590</p>
+        <p><a href="https://wa.me/919033263590" target="_blank">📱 WhatsApp Now</a></p>
+    </div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.4962358617254!2d74.15974969999999!3d23.005545099999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3960def9d25c989b%3A0x92458201918ee2c4!2sAchiever%20Computer%20Education!5e0!3m2!1sen!2sin!4v1751774627000!5m2!1sen!2sin" width="100%" height="200" frameborder="0" style="border:0;"></iframe>
+</section>
+
+<a href="https://wa.me/919033263590" target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<footer>
+    © 2025 Achiever Computer Education | All Rights Reserved.
+</footer>
+
 </body>
 </html>

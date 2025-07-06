@@ -1,13 +1,85 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Verify Certificate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification - Achiever Computer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #ffffff; color: #333; }
+        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px; text-align: center; position: relative; }
+        nav { margin-top: 10px; }
+        nav a { margin: 0 15px; color: #fff; text-decoration: underline; font-weight: 600; font-size: 16px; }
+        .verify-container { max-width: 500px; margin: 40px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; text-align: center; }
+        .verify-container h2 { color: #007BFF; }
+        .verify-container input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+        .verify-container button { width: 100%; padding: 12px; background: #28A745; color: #fff; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; }
+        .verify-container button:hover { background: #218838; }
+        #result { margin-top: 20px; font-weight: 600; }
+        footer { background: #f1f1f1; text-align: center; padding: 15px; margin-top: 30px; font-size: 14px; }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
+            authDomain: "achiever-computer.firebaseapp.com",
+            projectId: "achiever-computer"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.verifyCertificate = async function() {
+            const certNo = document.getElementById('certNo').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            try {
+                const docRef = doc(db, "certificates", certNo);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    resultDiv.innerHTML = `✅ Certificate Found<br>
+                        👤 Name: ${data.name || 'N/A'}<br>
+                        📚 Course: ${data.course || 'N/A'}<br>
+                        ⏳ Duration: ${data.duration || 'N/A'}<br>
+                        🆔 Certificate No: ${certNo}<br>
+                        🗓️ Award Date: ${data.awardDate || 'N/A'}`;
+                } else {
+                    resultDiv.innerHTML = "❌ Certificate Not Found";
+                }
+            } catch (error) {
+                resultDiv.innerHTML = "Error: " + error.message;
+            }
+        }
+    </script>
 </head>
 <body>
-    <h1>Certificate Verification</h1>
-    <input type="text" placeholder="Enter Certificate No">
-    <button>Verify</button>
+
+<header>
+    <h1>Achiever Computer Education</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="courses.html">Courses</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="login.html">Student Login</a>
+        <a href="verify.html">Certificate Verification</a>
+    </nav>
+</header>
+
+<div class="verify-container">
+    <h2>Certificate Verification</h2>
+    <input type="text" id="certNo" placeholder="Enter Certificate Number" required>
+    <button onclick="verifyCertificate()">Verify</button>
+    <div id="result"></div>
+</div>
+
+<footer>
+    © 2025 Achiever Computer Education | All Rights Reserved.
+</footer>
+
 </body>
 </html>
