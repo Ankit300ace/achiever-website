@@ -19,42 +19,66 @@
         footer { background: #f1f1f1; text-align: center; padding: 15px; margin-top: 30px; font-size: 14px; }
     </style>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
-            authDomain: "achiever-computer.firebaseapp.com",
-            projectId: "achiever-computer"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
+        authDomain: "achiever-computer.firebaseapp.com",
+        projectId: "achiever-computer"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        window.verifyCertificate = async function() {
-            const certNo = document.getElementById('certNo').value.trim();
-            const resultDiv = document.getElementById('result');
+    window.verifyCertificate = async function() {
+        const certNo = document.getElementById('certNo').value.trim();
+        const resultDiv = document.getElementById('result');
 
-            try {
-                const docRef = doc(db, "certificates", certNo);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    resultDiv.innerHTML = `✅ Certificate Found<br>
-                        👤 Name: ${data.name || 'N/A'}<br>
-                        📚 Course: ${data.course || 'N/A'}<br>
-                        ⏳ Duration: ${data.duration || 'N/A'}<br>
-                        🆔 Certificate No: ${certNo}<br>
-                        🗓️ Award Date: ${data.awardDate || 'N/A'}`;
-                } else {
-                    resultDiv.innerHTML = "❌ Certificate Not Found";
-                }
-            } catch (error) {
-                resultDiv.innerHTML = "Error: " + error.message;
-            }
+        if (!certNo) {
+            resultDiv.innerHTML = "❗ Please enter a Certificate Number.";
+            return;
         }
-    </script>
+
+        try {
+            const docRef = doc(db, "certificates", certNo);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                console.log("Document Data:", data);  // Debugging Purpose
+
+                // Award Date Conversion
+                let awardDate = 'N/A';
+                try {
+                    if (data.awarddate && typeof data.awarddate.toDate === 'function') {
+                        awardDate = data.awarddate.toDate().toLocaleDateString();
+                    } else {
+                        awardDate = data.awarddate ? data.awarddate.toString() : 'N/A';
+                    }
+                } catch (error) {
+                    console.error("Award Date error:", error);
+                    awardDate = 'N/A';
+                }
+
+                // Build the HTML output
+                resultDiv.innerHTML = `✅ Certificate Found<br>
+                    👤 Name: ${data.name || 'N/A'}<br>
+                    📚 Course: ${data.course || 'N/A'}<br>
+                    ⏳ Duration: ${data.duration || 'N/A'}<br>
+                    🆔 Certificate No: ${certNo}<br>
+                    🎯 Percentage: ${data.percentage || 'N/A'}<br>
+                    🗓️ Award Date: ${awardDate}`;
+            } else {
+                resultDiv.innerHTML = "❌ Certificate Not Found";
+            }
+        } catch (error) {
+            console.error(error);
+            resultDiv.innerHTML = "Error: " + error.message;
+        }
+    }
+</script>
+
 </head>
 <body>
 
