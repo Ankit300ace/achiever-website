@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Panel - Achiever Computer</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
   <style>
     body {
@@ -14,14 +14,12 @@
       margin: 0;
       padding: 0;
     }
-
     header {
       background: linear-gradient(90deg, #007BFF, #28A745);
       color: #fff;
       padding: 20px;
       text-align: center;
     }
-
     nav a {
       margin: 0 15px;
       color: #fff;
@@ -29,7 +27,6 @@
       font-weight: 600;
       font-size: 16px;
     }
-
     .container {
       max-width: 1000px;
       margin: 30px auto;
@@ -37,12 +34,10 @@
       border-radius: 8px;
       background: #fff;
     }
-
     h2 {
       color: #007BFF;
       text-align: center;
     }
-
     input, select {
       display: block;
       width: 100%;
@@ -51,7 +46,6 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-
     button {
       padding: 10px 20px;
       margin: 10px 5px 20px 0;
@@ -61,50 +55,37 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     button:hover {
       background: #218838;
     }
-
     .logout {
       background: #dc3545;
     }
-
     .logout:hover {
       background: #c82333;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 30px;
       font-size: 14px;
     }
-
     th, td {
       padding: 10px;
       border-bottom: 1px solid #ddd;
       text-align: left;
     }
-
     th {
       background: #f7f7f7;
       font-weight: 600;
     }
-
     .actions i {
       cursor: pointer;
       margin: 0 8px;
       font-size: 16px;
     }
-
-    .actions i.fa-edit {
-      color: #007BFF;
-    }
-
-    .actions i.fa-trash {
-      color: red;
-    }
+    .actions i.fa-edit { color: #007BFF; }
+    .actions i.fa-trash { color: red; }
 
     /* Modal Styling */
     .modal {
@@ -119,14 +100,12 @@
       justify-content: center;
       align-items: center;
     }
-
     .modal-content {
       background: #fff;
       padding: 20px;
       width: 400px;
       border-radius: 8px;
     }
-
     .modal-content input {
       margin: 8px 0;
       padding: 10px;
@@ -189,9 +168,9 @@
       <input type="text" id="editName" placeholder="Name">
       <input type="text" id="editCourse" placeholder="Course">
       <input type="text" id="editDuration" placeholder="Duration">
-      <input type="text" id="editCertificate No" placeholder="Certificate No">
       <input type="text" id="editPercentage" placeholder="Percentage">
       <input type="date" id="editAwardDate">
+      <input type="text" id="editCertNumber" placeholder="Certificate Number">
       <button onclick="saveEdit()">Save</button>
       <button onclick="closeModal()">Cancel</button>
     </div>
@@ -282,9 +261,9 @@
       document.getElementById('editName').value = data.name;
       document.getElementById('editCourse').value = data.course;
       document.getElementById('editDuration').value = data.duration;
-      document.getElementById('editCertificatenumber').value=data.certificateNumber;
       document.getElementById('editPercentage').value = data.percentage;
       document.getElementById('editAwardDate').value = data.awarddate.toDate().toISOString().split('T')[0];
+      document.getElementById('editCertNumber').value = data.certificateNumber;
 
       document.getElementById('editModal').style.display = 'flex';
     }
@@ -297,7 +276,8 @@
         course: document.getElementById('editCourse').value,
         duration: document.getElementById('editDuration').value,
         percentage: document.getElementById('editPercentage').value,
-        awarddate: Timestamp.fromDate(new Date(document.getElementById('editAwardDate').value))
+        awarddate: Timestamp.fromDate(new Date(document.getElementById('editAwardDate').value)),
+        certificateNumber: document.getElementById('editCertNumber').value
       });
       closeModal();
       loadStudents();
