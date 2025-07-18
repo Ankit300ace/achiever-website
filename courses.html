@@ -20,7 +20,12 @@
         text-align: center;
     }
     nav {
-        margin-top: 10px;
+        position: sticky;
+        top: 0;
+        background: linear-gradient(90deg, #007BFF, #28A745);
+        padding: 10px 0;
+        z-index: 1000;
+        text-align: center;
     }
     nav a {
         margin: 0 15px;
@@ -82,23 +87,36 @@
         margin-top: 30px;
         font-size: 14px;
     }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background-color: #0157f7;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
 </style>
 </head>
 <body>
 
 <header>
     <h1>Achiever Computer Education</h1>
+    <p>Learn Today, Lead Tomorrow</p>
     <p>Explore Our Professional Courses</p>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="login.html">Student Login</a>
-        <a href="verify.html">Certificate Verification</a>
-        <a href="payment.html">Pay Fees</a>
-    </nav>
 </header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="login.html">Student Login</a>
+    <a href="verify.html">Certificate Verification</a>
+    <a href="payment.html">Pay Fees</a>
+</nav>
 
 <div class="container">
     <h2>Our Popular Courses</h2>
@@ -108,55 +126,59 @@
             <h3>CCC</h3>
             <p>Course on Computer Concepts - Basic computer learning for beginners.</p>
             <div class="duration">Duration: 3 Months</div>
+            <a href="ccc.html" class="btn"> View Course</a>
         </div>
         <div class="course">
             <img src="https://img.icons8.com/color/96/document.png" alt="DCA">
             <h3>DCA</h3>
             <p>Diploma in Computer Applications - Office automation & programming basics.</p>
             <div class="duration">Duration: 6 Months</div>
+            <a href="dca.html" class="btn"> View Course</a>
         </div>
         <div class="course">
             <img src="https://img.icons8.com/color/96/accounting.png" alt="Tally">
             <h3>Tally ERP9</h3>
             <p>Professional accounting software training with GST & Payroll management.</p>
             <div class="duration">Duration: 2 to 6 Months</div>
+            <a href="tally.html" class="btn"> View Course</a>
         </div>
         <div class="course">
             <img src="https://img.icons8.com/color/96/adobe-photoshop--v1.png" alt="Photoshop">
             <h3>Photoshop & CorelDraw</h3>
             <p>Graphics design for ads, banners, logos, and editing.</p>
             <div class="duration">Duration: 3 Months</div>
+            <a href="dtp.html" class="btn"> View Course</a>
         </div>
         <div class="course">
             <img src="https://img.icons8.com/color/96/engineering.png" alt="AutoCAD">
             <h3>AutoCAD</h3>
             <p>2D & 3D Designing for Civil, Mechanical, and Electrical engineers.</p>
             <div class="duration">Duration: 3 Months</div>
+            <a href="autocad.html" class="btn"> View Course</a>
         </div>
         <div class="course">
             <img src="https://img.icons8.com/color/96/voice-presentation.png" alt="English">
             <h3>Spoken English</h3>
             <p>Fluency building, grammar, and public speaking for job interviews.</p>
             <div class="duration">Duration: 3 Months</div>
+            <a href="spoken.html" class="btn"> View Course</a>
         </div>
         <div class="course">
             <img src="https://img.icons8.com/color/96/source-code.png" alt="Web Dev">
             <h3>Freelancing & Web Development</h3>
             <p>HTML, CSS, JavaScript, Node.js, and freelancing tips for beginners.</p>
             <div class="duration">Duration: 12 Months</div>
+            <a href="freelancing.html" class="btn"> View Course</a>
         </div>
         <div class="course">
             <img src="https://img.icons8.com/color/96/monitor.png" alt="PGDCA">
             <h3>PGDCA</h3>
             <p>Post Graduate Diploma in Computer Applications - Advanced programming, database, and IT skills for graduates.</p>
             <div class="duration">Duration: 12 Months</div>
+            <a href="pgdca.html" class="btn"> View Course</a>
         </div>
     </div>
 </div>
-
-<a href="https://wa.me/919033263590" target="_blank" class="whatsapp-float">
-    <i class="fab fa-whatsapp"></i>
-</a>
 
 <footer>
     © 2025 Achiever Computer Education | All Rights Reserved.

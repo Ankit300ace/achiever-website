@@ -1,85 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Achiever Computer - Student Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Achiever Computer - Student Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
- // Firebase Config (તમારું project નું configuration નાખો)
-        const firebaseConfig = {
-            apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
-            authDomain: "achiever-computer.firebaseapp.com",
-            projectId: "achiever-computer",
-            storageBucket: "achiever-computer.appspot.com",
-            messagingSenderId: "79033622683",
-            appId: "1:79033622683:web:c3021c747936a720ada63e",
-            measurementId: "G-0CQSDS6C0K"
-        };
+    const firebaseConfig = {
+      apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
+      authDomain: "achiever-computer.firebaseapp.com",
+      projectId: "achiever-computer",
+      storageBucket: "achiever-computer.appspot.com",
+      messagingSenderId: "79033622683",
+      appId: "1:79033622683:web:c3021c747936a720ada63e",
+      measurementId: "G-0CQSDS6C0K"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        onAuthStateChanged(auth, async user => {
-            if (user) {
-                document.getElementById('userEmail').innerText = user.email;
-                const docRef = doc(db, "students", user.uid);
-                const docSnap = await getDoc(docRef);
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        document.getElementById('userEmail').innerText = user.email;
 
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    document.getElementById('studentName').innerText = data.name || "N/A";
-                    document.getElementById('studentCourse').innerText = data.course || "N/A";
-                    document.getElementById('studentFees').innerText = `Total: ₹${data.totalFees || 0}, Paid: ₹${data.paidFees || 0}, Due: ₹${data.dueFees || 0}`;
-                    document.getElementById('studentAddress').innerText = data.address || "N/A";
-                    document.getElementById('studentDOB').innerText = data.dob || "N/A";
-                    document.getElementById('studentContact').innerText = data.contact || "N/A";
-                } else {
-                    alert("Student Record Not Found");
-                }
-            } else {
-                window.location.href = "login.html";
-            }
-        });
+        const docRef = doc(db, "students", user.uid);
+        const docSnap = await getDoc(docRef);
 
-        window.logout = function() {
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            });
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById('studentName').innerText = data.fullname || "N/A";
+          document.getElementById('studentCourse').innerText = data.course || "N/A";
+          document.getElementById('studentContact').innerText = data.contact || "N/A";
+          document.getElementById('studentAddress').innerText = data.address || "N/A";
+          document.getElementById('studentGender').innerText = data.gender || "N/A";
+        } else {
+          alert("Student Record Not Found");
         }
-    </script>
-    <style>
-        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #fff; color: #333; }
-        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px; text-align: center; }
-        .dashboard { max-width: 600px; margin: 40px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; }
-        .dashboard h2 { color: #007BFF; text-align: center; }
-        .info { margin: 15px 0; font-size: 16px; }
-        button { padding: 10px 20px; background: #dc3545; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background: #c82333; }
-    </style>
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    window.logout = function() {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      });
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0; padding: 0;
+      background: #fff;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #007BFF, #28A745);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .dashboard {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .dashboard h2 {
+      color: #007BFF;
+      text-align: center;
+    }
+    .info {
+      margin: 15px 0;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #c82333;
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <h1>Student Dashboard</h1>
+  <h1>Student Dashboard</h1>
 </header>
 
 <div class="dashboard">
-    <h2>Welcome, <span id="studentName">...</span></h2>
-    <div class="info">Email: <span id="userEmail">...</span></div>
-    <div class="info">Course: <span id="studentCourse">...</span></div>
-    <div class="info">Fees Status: <span id="studentFees">...</span></div>
-    <div class="info">Address: <span id="studentAddress">...</span></div>
-    <div class="info">Date of Birth: <span id="studentDOB">...</span></div>
-    <div class="info">Contact No: <span id="studentContact">...</span></div>
-    <div style="text-align:center; margin-top:30px;">
-        <button onclick="logout()">Logout</button>
-    </div>
+  <h2>Welcome, <span id="studentName">...</span></h2>
+  <div class="info">Email: <span id="userEmail">...</span></div>
+  <div class="info">Course: <span id="studentCourse">...</span></div>
+  <div class="info">Contact No: <span id="studentContact">...</span></div>
+  <div class="info">Address: <span id="studentAddress">...</span></div>
+  <div class="info">Gender: <span id="studentGender">...</span></div>
+  <div style="text-align:center; margin-top:30px;">
+    <button onclick="logout()">Logout</button>
+  </div>
 </div>
 
 </body>

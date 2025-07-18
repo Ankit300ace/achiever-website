@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Achiever Computer - Student Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -41,41 +42,119 @@
                 });
         });
     </script>
+
     <style>
         body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #ffffff; color: #333; }
-        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px; text-align: center; position: relative; }
-        header img { position: absolute; top: 15px; left: 20px; height: 50px; border-radius: 5px; }
-        nav { margin-top: 10px; }
-        nav a { margin: 0 15px; color: #fff; text-decoration: underline; font-weight: 600; font-size: 16px; }
-        .login-container { max-width: 400px; margin: 40px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #007BFF, #28A745);
+            color: #fff;
+            padding: 20px 20px 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header img {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            height: 50px;
+            border-radius: 5px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .header p {
+            margin: 5px 0 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, #007BFF, #28A745);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+            color: #00ccff;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
         .login-container h2 { color: #007BFF; text-align: center; }
-        .login-container input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
-        .login-container button { width: 100%; padding: 12px; background: #007BFF; color: #fff; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
         .login-container button:hover { background: #0056b3; }
-        footer { background: #f1f1f1; text-align: center; padding: 15px; margin-top: 30px; font-size: 14px; }
+
+        footer {
+            background: #f1f1f1;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYY4z95TrY874zxFHXmiH4EflzwkYrdEnwqGPSO3EkvfW4FV606MRXl-AE9MtJAf9j5nndzoMLkP5HEtjLB5PGoEAPn9ObUx6wdYGW-TUl61lIgoRQ38knIZRKw-jSaj_III4uZuNate-ldBG-99Io7K8jPI72-Ulp2YCbzrSIqVr6FI8wbVpfTi54Cis/s320/logo.png" alt="Achiever Computer Logo" style="height:50px; border-radius:5px;">
-
+<!-- Header -->
+<div class="header">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYY4z95TrY874zxFHXmiH4EflzwkYrdEnwqGPSO3EkvfW4FV606MRXl-AE9MtJAf9j5nndzoMLkP5HEtjLB5PGoEAPn9ObUx6wdYGW-TUl61lIgoRQ38knIZRKw-jSaj_III4uZuNate-ldBG-99Io7K8jPI72-Ulp2YCbzrSIqVr6FI8wbVpfTi54Cis/s320/logo.png" alt="Achiever Computer Logo">
     <h1>Achiever Computer Education</h1>
     <p>Learn Today, Lead Tomorrow</p>
+</div>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="login.html">Student Login</a>
-        <a href="verify.html">Certificate Verification</a>
-    </nav>
+<!-- Navbar -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="login.html">Student Login</a>
+    <a href="verify.html">Certificate Verification</a>
+</div>
 
-    <h1>Admin Panel</h1>
-</header>
-
-
+<!-- Login Form -->
 <div class="login-container">
     <h2>Student Login</h2>
     <form id="loginForm">
@@ -84,6 +163,7 @@
         <button type="submit">Login</button>
     </form>
 </div>
+
 <p style="text-align:center; margin-top:15px;">
     Don't have an account? <a href="register.html" style="color:#007BFF; font-weight:600;">Register</a>
 </p>

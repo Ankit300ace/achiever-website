@@ -8,11 +8,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #ffffff; color: #333; }
-        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px 20px 60px 20px; text-align: center; position: relative; }
+        header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px 20px 40px 20px; text-align: center; position: relative; }
         header img { position: absolute; top: 15px; left: 20px; height: 50px; border-radius: 5px; }
-        nav { margin-top: 10px; }
-        nav a { margin: 0 15px; color: #fff; text-decoration: underline; font-weight: 600; font-size: 16px; transition: color 0.3s; }
+
+        /* Sticky Navbar */
+        nav {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(90deg, #007BFF, #28A745);
+            padding: 10px 0;
+            z-index: 999;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #fff;
+            text-decoration: underline;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
         nav a:hover { color: #FFD700; }
+
         h2 { color: #007BFF; margin-top: 0; font-size: 28px; text-align: center; }
 
         /* About Us Styling */
@@ -69,18 +86,18 @@
     <h1>Achiever Computer Education</h1>
     <p>Learn Today, Lead Tomorrow</p>
     <p>Govt. Approved | सरकार मान्य| સરકાર માન્ય</p>
-    <p>MSME GJ-07-0001112/ Reg.No. 219317240017/ CSC/VLEINS/GJ/2021/160437</p>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="login.html">Student Login</a>
-        <a href="verify.html">Certificate Verification</a>
-        <a href="payment.html">Pay Fees</a>
-    </nav>
 </header>
 
+<!-- Sticky Navbar -->
+<nav>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="login.html">Student Login</a>
+    <a href="verify.html">Certificate Verification</a>
+    <a href="payment.html">Pay Fees</a>
+</nav>
 
 <section>
     <h2>Our Courses</h2>
@@ -143,7 +160,6 @@
             <i class="fa-solid fa-indian-rupee-sign" style="font-size:24px; color:#FF9800;"></i><br>
             Affordable Fees
         </div>
-
         <div class="reason">
             <i class="fas fa-certificate" style="font-size:24px; color:#9C27B0;"></i><br>
             Certificate Verification
@@ -164,16 +180,19 @@
         <img src="iso.png" alt="ISO Certified">
         <img src="csc.png" alt="CSC Center">
     </div>
+    <div class="text" style="text-align: center;">
+        <p>MSME GJ-07-0001112/ Reg.No. 219317240017/ CSC/VLEINS/GJ/2021/160437</p>
+    </div>
 </section>
 
 <section>
-    <h2>Contact Us</h2>
+        
+         <h2>Contact Us</h2>
     <div class="contact" style="text-align:center;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.4962358617254!2d74.15974969999999!3d23.005545099999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3960def9d25c989b%3A0x92458201918ee2c4!2sAchiever%20Computer%20Education!5e0!3m2!1sen!2sin!4v1751774627000!5m2!1sen!2sin" width="400" height="200" frameborder="0" style="border:0;" ></iframe>
         <p>📍 Opps APMC Market, Dahod Road, Limdi</p>
         <p>📞 Phone: 90332 63590</p>
-        <p><a href="https://wa.me/919033263590" target="_blank">📱 WhatsApp Now</a></p>
     </div>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.4962358617254!2d74.15974969999999!3d23.005545099999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3960def9d25c989b%3A0x92458201918ee2c4!2sAchiever%20Computer%20Education!5e0!3m2!1sen!2sin!4v1751774627000!5m2!1sen!2sin" width="100%" height="200" frameborder="0" style="border:0;"></iframe>
 </section>
 
 <a href="https://wa.me/919033263590" target="_blank" class="whatsapp-float">

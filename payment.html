@@ -52,14 +52,11 @@
             color: #333;
         }
 
-        h2 {
+        h2, h3 {
             text-align: center;
             margin: 40px 0 20px;
         }
-        h3 {
-            text-align: center;
-            margin: 40px 0 20px;
-        }
+
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -102,11 +99,14 @@
             border-radius: 8px;
             font-size: 16px;
             text-decoration: none;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         .pay-button:hover {
-            background-color: #2c8e44;
+            background-color: #FF5722; /* Hover background */
+            transform: scale(1.1); /* Slight zoom effect */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            color: #fff;
         }
     </style>
 </head>
@@ -115,7 +115,8 @@
 <header>
     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYY4z95TrY874zxFHXmiH4EflzwkYrdEnwqGPSO3EkvfW4FV606MRXl-AE9MtJAf9j5nndzoMLkP5HEtjLB5PGoEAPn9ObUx6wdYGW-TUl61lIgoRQ38knIZRKw-jSaj_III4uZuNate-ldBG-99Io7K8jPI72-Ulp2YCbzrSIqVr6FI8wbVpfTi54Cis/s320/logo.png" alt="Achiever Computer Logo">
     <h1>Achiever Computer Education</h1>
-   <nav>
+    <p>Learn Today, Lead Tomorrow</p>
+    <nav>
         <a href="index.html">Home</a>
         <a href="courses.html">Courses</a>
         <a href="about.html">About Us</a>
@@ -127,7 +128,6 @@
 </header>
 
 <h2>Pay Your Course Fees</h2>
-
 <h3>Limited time offer</h3>
 
 <div class="container">
@@ -155,7 +155,8 @@
         <p>Course Fee: ₹4999</p>
         <a href="upi://pay?pa=9925502750-1@okbizaxis&pn=Achiever%20Computer&am=4999&cu=INR&tn=ADCA%20Course%20Fees" class="pay-button">Pay with GPay</a>
     </div>
-<div class="course-card">
+
+    <div class="course-card">
         <h3>DCA</h3>
         <p>Course Fee: ₹3999</p>
         <a href="upi://pay?pa=9925502750-1@okbizaxis&pn=Achiever%20Computer&am=3999&cu=INR&tn=DCA%20Course%20Fees" class="pay-button">Pay with GPay</a>
@@ -168,7 +169,7 @@
     </div>
 
     <div class="course-card">
-        <h3>H.T.M.L</HTML></h3>
+        <h3>H.T.M.L</h3>
         <p>Course Fee: ₹999</p>
         <a href="upi://pay?pa=9925502750-1@okbizaxis&pn=Achiever%20Computer&am=999&cu=INR&tn=H.T.M.L%20Course%20Fees" class="pay-button">Pay with GPay</a>
     </div>
@@ -184,6 +185,7 @@
         <p>Course Fee: ₹1000</p>
         <a href="upi://pay?pa=9925502750-1@okbizaxis&pn=Achiever%20Computer&am=1000&cu=INR&tn=INSTALMENT%20Course%20Fees" class="pay-button">Pay with GPay</a>
     </div>
+
 </div>
 
 </body>

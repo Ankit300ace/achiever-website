@@ -24,8 +24,13 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            const fullname = document.getElementById('fullname').value;
+            const course = document.getElementById('course').value;
+            const address = document.getElementById('address').value;
+            const gender = document.getElementById('gender').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const contact = document.getElementById('contact').value;
@@ -34,19 +39,23 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Save student data to Firestore
                 await setDoc(doc(db, "students", user.uid), {
-                    email: user.email,
-                    course: "",
+                    name: fullname,
+                    course: course,
+                    address: address,
+                    gender: gender,
+                    email: email,
                     contact: contact,
                     totalFees: 0,
                     paidFees: 0,
-                    dueFees: 0
+                    dueFees: 0,
+                    certificateNumber: "",
+                    percentage: "",
+                    awarddate: ""
                 });
 
-                alert('Registration Successful! Please login now.');
+                alert("Registration Successful! Please login now.");
                 window.location.href = "login.html";
-
             } catch (error) {
                 alert("Error: " + error.message);
             }
@@ -83,10 +92,10 @@
 <div class="container">
     <h2>Student Registration</h2>
     <form id="registerForm">
-        <input type="fullname" id="fullname" placeholder="Fullname" required>
-        <input type="course" id="course" placeholder="Course" required>
-        <input type="text" id="address" placeholder="address" required>
-        <input type="gender" id="gender" placeholder="Male/Female" required>
+        <input type="text" id="fullname" placeholder="Fullname" required>
+        <input type="text" id="course" placeholder="Course" required>
+        <input type="text" id="address" placeholder="Address" required>
+        <input type="text" id="gender" placeholder="Male/Female" required>
         <input type="email" id="email" placeholder="Email" required>
         <input type="password" id="password" placeholder="Password" required>
         <input type="text" id="contact" placeholder="Contact Number" required>
