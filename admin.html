@@ -1,162 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel - Achiever Computer</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-body { font-family: 'Poppins', sans-serif; background: #f0f0f0; margin: 0; padding: 0; }
-nav a { margin: 0 15px; color: #fff; text-decoration: underline; font-weight: 600; font-size: 16px; }
-header { background: linear-gradient(90deg, #007BFF, #28A745); color: #fff; padding: 20px; text-align: center; }
-.container { max-width: 600px; margin: 40px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; }
-h2 { color: #007BFF; text-align: center; }
-input, select { display: block; width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-button { padding: 8px 15px; margin: 5px; background: #28A745; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-button:hover { background: #218838; }
-.logout { background: #dc3545; margin-top: 20px; }
-.logout:hover { background: #c82333; }
-ul { list-style: none; padding: 0; }
-li { margin: 10px 0; padding: 8px; background: #fff; border: 1px solid #ccc; border-radius: 5px; }
-</style>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, Timestamp, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Panel - Achiever Computer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-const firebaseConfig = { apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84", authDomain: "achiever-computer.firebaseapp.com", projectId: "achiever-computer" };
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-onAuthStateChanged(auth, user => { if (!user) window.location.href = "login.html"; else loadStudents(); });
-
-window.addStudent = async function() {
-    const name = document.getElementById('name').value;
-    const course = document.getElementById('course').value;
-    const contact = document.getElementById('contact').value;
-    const gender = document.getElementById('gender').value;
-    const totalFees = parseInt(document.getElementById('fees').value);
-    const duration = document.getElementById('duration').value;
-    const percentage = document.getElementById('percentage').value;
-    const awarddate = new Date(document.getElementById('awarddate').value);
-    const year = "2025";
-
-    if (!name || !course || !contact || !gender || !totalFees || !duration || !percentage || !awarddate) {
-        alert("Please fill all fields properly.");
-        return;
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 0;
     }
 
-    const newCertNumber = `ACE ${year} ${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+    header {
+      background: linear-gradient(90deg, #007BFF, #28A745);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
 
-    await addDoc(collection(db, "students"), {
+    nav a {
+      margin: 0 15px;
+      color: #fff;
+      text-decoration: underline;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    h2 {
+      color: #007BFF;
+      text-align: center;
+    }
+
+    input, select {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px 5px 20px 0;
+      background: #28A745;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    .logout {
+      background: #dc3545;
+    }
+
+    .logout:hover {
+      background: #c82333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: #f7f7f7;
+      font-weight: 600;
+    }
+
+    .actions i {
+      cursor: pointer;
+      margin: 0 8px;
+      font-size: 16px;
+    }
+
+    .actions i.fa-edit {
+      color: #007BFF;
+    }
+
+    .actions i.fa-trash {
+      color: red;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      width: 400px;
+      border-radius: 8px;
+    }
+
+    .modal-content input {
+      margin: 8px 0;
+      padding: 10px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Achiever Computer Education</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="login.html">Student Login</a>
+      <a href="verify.html">Certificate Verification</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Add New Student</h2>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <select id="gender" required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+    <input type="text" id="course" placeholder="Course" required>
+    <input type="text" id="contact" placeholder="Contact Number" required>
+    <input type="number" id="fees" placeholder="Total Fees" required>
+    <input type="text" id="duration" placeholder="Course Duration (e.g., 3 Months)" required>
+    <input type="text" id="percentage" placeholder="Percentage (e.g., 85%)" required>
+    <input type="date" id="awarddate" required>
+    <button onclick="addStudent()">Add Student</button>
+
+    <h2>Student List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Course</th>
+          <th>Duration</th>
+          <th>Certificate No</th>
+          <th>Award Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="studentList"></tbody>
+    </table>
+
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <h3>Edit Student</h3>
+      <input type="text" id="editName" placeholder="Name">
+      <input type="text" id="editCourse" placeholder="Course">
+      <input type="text" id="editDuration" placeholder="Duration">
+      <input type="text" id="editPercentage" placeholder="Percentage">
+      <input type="date" id="editAwardDate">
+      <button onclick="saveEdit()">Save</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, Timestamp, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCX272Yt2TEr7GJcupMPW39DPFl1sq2d84",
+      authDomain: "achiever-computer.firebaseapp.com",
+      projectId: "achiever-computer"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentEditId = null;
+
+    onAuthStateChanged(auth, user => {
+      if (!user) window.location.href = "login.html";
+      else loadStudents();
+    });
+
+    window.addStudent = async function () {
+      const name = document.getElementById('name').value;
+      const course = document.getElementById('course').value;
+      const contact = document.getElementById('contact').value;
+      const gender = document.getElementById('gender').value;
+      const totalFees = parseInt(document.getElementById('fees').value);
+      const duration = document.getElementById('duration').value;
+      const percentage = document.getElementById('percentage').value;
+      const awarddate = new Date(document.getElementById('awarddate').value);
+      const year = "2025";
+
+      if (!name || !course || !contact || !gender || !totalFees || !duration || !percentage || !awarddate) {
+        alert("Please fill all fields properly.");
+        return;
+      }
+
+      const newCertNumber = `ACE ${year} ${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+
+      await addDoc(collection(db, "students"), {
         name, course, contact, gender, totalFees,
         paidFees: 0,
         dueFees: totalFees,
         certificateNumber: newCertNumber,
         year, duration, percentage,
         awarddate: Timestamp.fromDate(awarddate)
-    });
+      });
 
-    loadStudents();
-}
+      loadStudents();
+    }
 
-window.loadStudents = async function() {
-    const querySnapshot = await getDocs(collection(db, "students"));
-    const list = document.getElementById('studentList');
-    list.innerHTML = '';
+    window.loadStudents = async function () {
+      const querySnapshot = await getDocs(collection(db, "students"));
+      const list = document.getElementById('studentList');
+      list.innerHTML = '';
 
-    querySnapshot.forEach(docSnap => {
+      querySnapshot.forEach(docSnap => {
         const data = docSnap.data();
-        list.innerHTML += `<li>
-            <strong>${data.name}</strong> (${data.gender}) - ${data.course}<br>
-            Certificate No: ${data.certificateNumber}<br>
-            Contact: ${data.contact}<br>
-            Fees: ₹${data.totalFees}, Paid ₹${data.paidFees}, Due ₹${data.dueFees}<br>
-            <button onclick="editStudent('${docSnap.id}')">Edit</button>
-            <button onclick="addPayment('${docSnap.id}')">Add Payment</button>
-            <button onclick="viewPayments('${docSnap.id}')">View Payments</button>
-            <button onclick="deleteStudent('${docSnap.id}')">Delete</button>
-        </li>`;
-    });
-}
+        const award = data.awarddate.toDate().toLocaleDateString('en-GB');
 
-window.deleteStudent = async function(id) {
-    if (confirm("Are you sure you want to delete this student?")) {
+        list.innerHTML += `<tr>
+          <td>${data.name}</td>
+          <td>${data.course}</td>
+          <td>${data.duration}</td>
+          <td>${data.certificateNumber}</td>
+          <td>${award}</td>
+          <td class="actions">
+            <i class="fas fa-edit" onclick="openEdit('${docSnap.id}')"></i>
+            <i class="fas fa-trash" onclick="deleteStudent('${docSnap.id}')"></i>
+          </td>
+        </tr>`;
+      });
+    }
+
+    window.openEdit = async function (id) {
+      currentEditId = id;
+      const studentRef = doc(db, "students", id);
+      const studentSnap = await getDoc(studentRef);
+      if (!studentSnap.exists()) return alert("Student not found.");
+
+      const data = studentSnap.data();
+      document.getElementById('editName').value = data.name;
+      document.getElementById('editCourse').value = data.course;
+      document.getElementById('editDuration').value = data.duration;
+      document.getElementById('editPercentage').value = data.percentage;
+      document.getElementById('editAwardDate').value = data.awarddate.toDate().toISOString().split('T')[0];
+
+      document.getElementById('editModal').style.display = 'flex';
+    }
+
+    window.saveEdit = async function () {
+      if (!currentEditId) return;
+      const studentRef = doc(db, "students", currentEditId);
+      await updateDoc(studentRef, {
+        name: document.getElementById('editName').value,
+        course: document.getElementById('editCourse').value,
+        duration: document.getElementById('editDuration').value,
+        percentage: document.getElementById('editPercentage').value,
+        awarddate: Timestamp.fromDate(new Date(document.getElementById('editAwardDate').value))
+      });
+      closeModal();
+      loadStudents();
+    }
+
+    window.closeModal = function () {
+      document.getElementById('editModal').style.display = 'none';
+      currentEditId = null;
+    }
+
+    window.deleteStudent = async function (id) {
+      if (confirm("Are you sure you want to delete this student?")) {
         await deleteDoc(doc(db, "students", id));
         loadStudents();
+      }
     }
-}
 
-window.editStudent = async function(id) {
-    const studentRef = doc(db, "students", id);
-    const studentSnap = await getDoc(studentRef);
-    if (!studentSnap.exists()) return alert("Student not found.");
-
-    const data = studentSnap.data();
-    const newName = prompt("Edit Name", data.name);
-    if (!newName) return;
-
-    await updateDoc(studentRef, { name: newName });
-    loadStudents();
-}
-
-window.addPayment = async function(id) {
-    const amount = parseInt(prompt("Enter Payment Amount"));
-    if (!amount) return;
-
-    const studentRef = doc(db, "students", id);
-    const studentSnap = await getDoc(studentRef);
-    if (!studentSnap.exists()) return alert("Student not found.");
-
-    const data = studentSnap.data();
-    const paid = (data.paidFees || 0) + amount;
-    const due = data.totalFees - paid;
-
-    await updateDoc(studentRef, { paidFees: paid, dueFees: due });
-    loadStudents();
-}
-
-window.viewPayments = function(id) {
-    alert("Payments viewing feature coming soon for " + id);
-}
-
-window.logout = function() {
-    signOut(auth).then(() => window.location.href = "login.html");
-}
-</script>
-</head>
-<body>
-<header>
-    <h1>Achiever Computer Education</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="courses.html">Courses</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="login.html">Student Login</a>
-        <a href="verify.html">Certificate Verification</a>
-    </nav>
-</header>
-<div class="container">
-<h2>Add New Student</h2>
-<input type="text" id="name" placeholder="Full Name" required>
-<select id="gender" required>
-    <option value="">Select Gender</option>
-    <option value="Male">Male</option>
-    <option value="Female">Female</option>
-</select>
-<input type="text" id="course" placeholder="Course" required>
-<input type="text" id="contact" placeholder="Contact Number" required>
-<input type="number" id="fees" placeholder="Total Fees" required>
-<input type="text" id="duration" placeholder="Course Duration (e.g., 3 Months)" required>
-<input type="text" id="percentage" placeholder="Percentage (e.g., 85%)" required>
-<input type="date" id="awarddate" required>
-<button onclick="addStudent()">Add Student</button>
-<h2>Student List</h2>
-<ul id="studentList"></ul>
-<button class="logout" onclick="logout()">Logout</button>
-</div>
+    window.logout = function () {
+      signOut(auth).then(() => window.location.href = "login.html");
+    }
+  </script>
 </body>
 </html>
